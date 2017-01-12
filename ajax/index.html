@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Belajar Ajax</title>
+</head>
+<body>
+	<button onclick="ajaxGetDate()">Jangan di Pegang!</button>
+	<span id="tanggal"></span>
+
+	<hr>
+	<br>
+	Nama 1 : <input type="text" id="nama1"><br>
+	Nama 2 : <input type="text" id="nama2"><br>
+	
+	<button onclick="ajaxPostData()">Gabungkan Nama</button>
+</body>
+
+<script type="text/javascript">
+	function ajaxPostData() {
+
+		// ambil data yang akan di kirim -----------------
+		var nama1 = document.getElementById('nama1').value;
+		var nama2 = document.getElementById('nama2').value;
+		// ------------------------------------------------
+
+		
+
+		// inisial xhttp ( harus selalu ada ) ----------------------------------
+		var xhttp;
+		if (window.XMLHttpRequest){
+			xhttp = new XMLHttpRequest();
+		}else{
+			xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		//-------------------------------------------------
+
+		
+
+		// readyState Holds the status
+		// 0.request not initialzed
+		// 1.sever connection established
+		// 2.request received
+		// 3.processing request
+		// 4.request finished and response is ready
+		xhttp.onreadystatechange = function () {
+			if (this.readyState==4 && this.status==200) {
+				document.getElementById('tanggal').innerHTML = this.responseText;
+			}
+		};
+		// ----------------------------------------------------------------------
+
+
+	
+		//buka koneksi ajax dengan metode POST --------------------------
+		xhttp.open("POST","server.php?p=joiner");
+		// ----------------------------------------------------------
+		
+
+		
+		// set request header ---------------------------------------------------
+		xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		//-----------------------------------------------------------------------
+
+		
+
+		//kirim request-----------------------------
+		xhttp.send("nama1="+nama1+"&nama2="+nama2);
+		// ------------------------------------------
+	}
+
+</script>
+
+<script type="text/javascript">
+	function ajaxGetDate() {
+
+		//inisiasi ajax--------------------------------------
+		var xhttp;
+		if (window.XMLHttpRequest) {
+			xhttp = new XMLHttpRequest();
+		}else{
+			xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		//---------------------------------------------------
+
+
+		// readyState Holds the status
+		// 0.request not initialzed
+		// 1.sever connection established
+		// 2.request received
+		// 3.processing request
+		// 4.request finished and response is ready
+		xhttp.onreadystatechange = function () {
+			if (this.readyState==4 && this.status==200) {
+				document.getElementById('tanggal').innerHTML = this.responseText;
+			}
+		};
+		//-------------------------------------------------------------------------
+
+		
+
+		// membuka koneksia ajx ke server.php--------------------------
+		// dengan method GET
+		xhttp.open("GET","server.php?p=date");
+		// ------------------------------------------------------------
+
+
+
+		// mengirim ajax---------------------------
+		xhttp.send();
+		// ---------------------------------------	
+	}
+</script>
+</html>
